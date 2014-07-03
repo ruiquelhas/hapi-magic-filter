@@ -27,5 +27,11 @@
   "homepage": "https://github.com/ruiquelhas/hapi-magic-filter",
   "dependencies": {
     "boom": "^2.4.2"
+  },
+  "devDependencies": {
+    "form-data": "^0.1.4",
+    "hapi": "^6.0.2",
+    "lab": "^3.2.1",
+    "request": "^2.36.0"
   }
 }
