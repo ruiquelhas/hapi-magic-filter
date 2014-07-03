@@ -1,0 +1,28 @@
+{
+  "name": "hapi-magic-filter",
+  "version": "0.0.1",
+  "description": "Hapi.js plugin to validate multipart/form-data file contents.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/lab/bin/lab -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ruiquelhas/hapi-magic-filter.git"
+  },
+  "keywords": [
+    "magic",
+    "mime",
+    "multipart/form-data",
+    "hapi",
+    "plugin",
+    "upload",
+    "file"
+  ],
+  "author": "Rui Quelhas <rfpquelhas@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ruiquelhas/hapi-magic-filter/issues"
+  },
+  "homepage": "https://github.com/ruiquelhas/hapi-magic-filter"
+}
