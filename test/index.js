@@ -1,4 +1,4 @@
-var Request = require('request');
+var fs = require('fs');
 
 var Lab = require('lab');
 var Hapi = require('hapi');
@@ -13,13 +13,6 @@ Lab.experiment('multipart/form-data file upload', function () {
     self.aux = {};
 
     self.aux.server = Hapi.createServer(1337);
-    self.aux.server.route({
-      path: '/',
-      method: 'POST',
-      handler: function (request, reply) {
-        reply(request.response);
-      }
-    });
 
     self.aux.server.pack.register({
       plugin: plugin,
@@ -35,29 +28,122 @@ Lab.experiment('multipart/form-data file upload', function () {
     });
   });
 
-  Lab.test('returns an OK response if the file type is valid', function (done) {
-    var url = 'http://nodejs.org/images/logo.png';
-    var form = new FormData();
+  Lab.experiment('the files are parsed as data buffers', function () {
+    Lab.before(function (done) {
+      this.aux.server.route({
+        path: '/data',
+        method: 'POST',
+        config: {
+          handler: function (request, reply) {
+            reply(request.response);
+          },
+          payload: {
+            output: 'data'
+          }
+        }
+      });
 
-    form.append('file', Request.get(url));
-    form.submit('http://127.0.0.1:1337/', function (err, res) {
-      Lab.expect(err).to.be.null;
-      Lab.expect(res.statusCode).to.equal(200);
       done();
+    });
+
+    Lab.test('returns an OK response if the file type is valid', function (done) {
+      var form = new FormData();
+      form.append('file', fs.createReadStream('resources/file.png'));
+      form.submit('http://127.0.0.1:1337/data', function (err, res) {
+        Lab.expect(err).to.be.null;
+        Lab.expect(res.statusCode).to.equal(200);
+        done();
+      });
+    });
+
+    Lab.test('returns a unsupported media type error if the file type is invalid', function (done) {
+      var form = new FormData();
+      form.append('file', fs.createReadStream('resources/file.invalid'));
+      form.submit('http://127.0.0.1:1337/data', function (err, res) {
+        Lab.expect(err).to.be.null;
+        Lab.expect(res.statusCode).to.equal(415);
+        done();
+      });
     });
   });
 
-  Lab.test('returns a unsupported media type error if the file type is invalid', function (done) {
-    var url = 'http://nodejs.org/images/logo.svg';
-    var form = new FormData();
+  Lab.experiment('the files are parsed as streams', function () {
+    Lab.before(function (done) {
+      this.aux.server.route({
+        path: '/stream',
+        method: 'POST',
+        config: {
+          handler: function (request, reply) {
+            reply(request.response);
+          },
+          payload: {
+            output: 'stream'
+          }
+        }
+      });
 
-    form.append('file', Request.get(url));
-    form.submit('http://127.0.0.1:1337/', function (err, res) {
-      Lab.expect(err).to.be.null;
-      Lab.expect(res.statusCode).to.equal(415);
       done();
     });
+
+    Lab.test('returns an OK response if the file type is valid', function (done) {
+      var form = new FormData();
+      form.append('file', fs.createReadStream('resources/file.png'));
+      form.submit('http://127.0.0.1:1337/stream', function (err, res) {
+        Lab.expect(err).to.be.null;
+        Lab.expect(res.statusCode).to.equal(200);
+        done();
+      });
+    });
+
+    Lab.test('returns a unsupported media type error if the file type is invalid', function (done) {
+      var form = new FormData();
+      form.append('file', fs.createReadStream('resources/file.invalid'));
+      form.submit('http://127.0.0.1:1337/stream', function (err, res) {
+        Lab.expect(err).to.be.null;
+        Lab.expect(res.statusCode).to.equal(415);
+        done();
+      });
+    });
   });
+
+  // Lab.experiment('the files are parsed as temporary files', function () {
+  //   Lab.before(function (done) {
+  //     this.aux.server.route({
+  //       path: '/file',
+  //       method: 'POST',
+  //       config: {
+  //         handler: function (request, reply) {
+  //           reply(request.response);
+  //         },
+  //         payload: {
+  //           output: 'file'
+  //         }
+  //       }
+  //     });
+  //
+  //     done();
+  //   });
+  //
+  //   Lab.test('returns an OK response if the file type is valid', function (done) {
+  //     var form = new FormData();
+  //     form.append('file', fs.createReadStream('resources/file.png'));
+  //     form.submit('http://127.0.0.1:1337/file', function (err, res) {
+  //       Lab.expect(err).to.be.null;
+  //       Lab.expect(res.statusCode).to.equal(200);
+  //       done();
+  //     });
+  //   });
+  //
+  //   Lab.test('returns a unsupported media type error if the file type is invalid', function (done) {
+  //     var form = new FormData();
+  //     form.append('file', fs.createReadStream('resources/file.invalid'));
+  //     form.submit('http://127.0.0.1:1337/file', function (err, res) {
+  //       Lab.expect(err).to.be.null;
+  //       Lab.expect(res.statusCode).to.equal(415);
+  //       done();
+  //     });
+  //   });
+  // });
 
   Lab.after(function (done) {
     var self = this;
