@@ -7,7 +7,7 @@ var FormData = require('form-data');
 var plugin = require('../index');
 
 Lab.experiment('HTTP POST request with a multipart/form-data payload', function () {
-  Lab.before(function (done) {
+  Lab.beforeEach(function (done) {
     var self = this;
     self.aux = {};
 
@@ -49,6 +49,7 @@ Lab.experiment('HTTP POST request with a multipart/form-data payload', function 
       if (err) {
         throw err;
       }
+      
       self.aux.server.start(done);
     });
   });
@@ -108,18 +109,18 @@ Lab.experiment('HTTP POST request with a multipart/form-data payload', function 
       });
     });
 
-    // Lab.test('returns an appropriate error if the file type is not supported', function (done) {
-    //   var form = new FormData();
-    //   form.append('file', fs.createReadStream('resources/file.js'));
-    //   form.submit('http://127.0.0.1:1337/file', function (err, response) {
-    //     Lab.expect(err).to.be.null;
-    //     Lab.expect(response.statusCode).to.equal(415);
-    //     done();
-    //   });
-    // });
+    Lab.test('returns an appropriate error if the file type is not supported', function (done) {
+      var form = new FormData();
+      form.append('file', fs.createReadStream('resources/file.js'));
+      form.submit('http://127.0.0.1:1337/file', function (err, response) {
+        Lab.expect(err).to.be.null;
+        Lab.expect(response.statusCode).to.equal(415);
+        done();
+      });
+    });
   });
 
-  Lab.after(function (done) {
+  Lab.afterEach(function (done) {
     var self = this;
     self.aux.server.stop(function (err) {
       if (err) {
@@ -128,6 +129,6 @@ Lab.experiment('HTTP POST request with a multipart/form-data payload', function 
 
       delete self.aux;
       done();
-    })
+    });
   });
 });
