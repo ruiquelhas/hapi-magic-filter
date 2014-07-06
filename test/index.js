@@ -66,7 +66,7 @@ Lab.experiment('HTTP POST request with a multipart/form-data payload', function 
 
     Lab.test('returns an appropriate error if the file type is not supported', function (done) {
       var form = new FormData();
-      form.append('file', fs.createReadStream('resources/file.invalid'));
+      form.append('file', fs.createReadStream('resources/file.js'));
       form.submit('http://127.0.0.1:1337/data', function (err, response) {
         Lab.expect(err).to.be.null;
         Lab.expect(response.statusCode).to.equal(415);
@@ -88,7 +88,7 @@ Lab.experiment('HTTP POST request with a multipart/form-data payload', function 
 
     Lab.test('returns an appropriate error if the file type is not supported', function (done) {
       var form = new FormData();
-      form.append('file', fs.createReadStream('resources/file.invalid'));
+      form.append('file', fs.createReadStream('resources/file.js'));
       form.submit('http://127.0.0.1:1337/stream', function (err, response) {
         Lab.expect(err).to.be.null;
         Lab.expect(response.statusCode).to.equal(415);
@@ -97,27 +97,27 @@ Lab.experiment('HTTP POST request with a multipart/form-data payload', function 
     });
   });
 
-  // Lab.experiment('the server parses the payload media resources as temporary files', function () {
-  //   Lab.test('returns an OK response if all the upload data is valid', function (done) {
-  //     var form = new FormData();
-  //     form.append('file', fs.createReadStream('resources/file.png'));
-  //     form.submit('http://127.0.0.1:1337/file', function (err, response) {
-  //       Lab.expect(err).to.be.null;
-  //       Lab.expect(response.statusCode).to.equal(200);
-  //       done();
-  //     });
-  //   });
-  //
-  //   Lab.test('returns an appropriate error if the file type is not supported', function (done) {
-  //     var form = new FormData();
-  //     form.append('file', fs.createReadStream('resources/file.invalid'));
-  //     form.submit('http://127.0.0.1:1337/file', function (err, response) {
-  //       Lab.expect(err).to.be.null;
-  //       Lab.expect(response.statusCode).to.equal(415);
-  //       done();
-  //     });
-  //   });
-  // });
+  Lab.experiment('the server parses the payload media resources as temporary files', function () {
+    Lab.test('returns an OK response if all the upload data is valid', function (done) {
+      var form = new FormData();
+      form.append('file', fs.createReadStream('resources/file.png'));
+      form.submit('http://127.0.0.1:1337/file', function (err, response) {
+        Lab.expect(err).to.be.null;
+        Lab.expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+
+    // Lab.test('returns an appropriate error if the file type is not supported', function (done) {
+    //   var form = new FormData();
+    //   form.append('file', fs.createReadStream('resources/file.js'));
+    //   form.submit('http://127.0.0.1:1337/file', function (err, response) {
+    //     Lab.expect(err).to.be.null;
+    //     Lab.expect(response.statusCode).to.equal(415);
+    //     done();
+    //   });
+    // });
+  });
 
   Lab.after(function (done) {
     var self = this;
