@@ -53,6 +53,26 @@ Lab.experiment('multipart/form-data file upload', function () {
     });
   });
 
+  Lab.experiment('when no file is provided for upload', function () {
+    Lab.beforeEach(function (done) {
+      suite.form = new Form();
+      suite.form.append('text', 'dummy');
+      Nipple.read(suite.form, function (err, buffer) {
+        suite.request.payload = buffer;
+        suite.request.headers = suite.form.getHeaders();
+        done();
+      });
+    });
+
+    Lab.test('everything should work fine', function (done) {
+      suite.request.url = '/data';
+      suite.server.inject(suite.request, function (response) {
+        Lab.expect(response.statusCode).to.equal(200);
+        done();
+      });
+    });
+  });
+
   Lab.experiment('when the file type is supported, the file should be upladed', function () {
     Lab.beforeEach(function (done) {
       suite.form = new Form();
