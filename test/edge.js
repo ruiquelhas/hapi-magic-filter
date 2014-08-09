@@ -7,7 +7,7 @@ var Form = require('form-data');
 
 var plugin = require('../lib/index');
 
-Lab.experiment('file output with user-defined file format whitelist', function () {
+Lab.experiment('general plugin edge-cases', function () {
   var suite = {};
 
   Lab.before(function (done) {
@@ -32,7 +32,7 @@ Lab.experiment('file output with user-defined file format whitelist', function (
     });
   });
 
-  Lab.test('returns control to the app if there is nothing to upload', function (done) {
+  Lab.test('returns control to the app if Content-Type is not multipart/form-data', function (done) {
     suite.request = { url: '/', method: 'POST' };
     suite.server.inject(suite.request, function (response) {
       Lab.expect(response.statusCode).to.equal(200);
