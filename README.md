@@ -50,7 +50,7 @@ server.pack.register([
 });
 ```
 
-<a name="hipster">If you are felling hipster, you can just provide your own custom whitelist (which will override the default one), using an object whose keys match the file extensions and values match the magic numbers.</a>
+If you are felling hipster, you can just provide your <a name="hipster">own</a> custom whitelist (which will override the default one), using an object whose keys match the file extensions and values match the magic numbers.
 
 ```javascript
 var Hapi = require('hapi');
@@ -77,7 +77,7 @@ server.pack.register([
 
 In any case, this is just glue on the `onPreHandler` extension point, so if all the uploaded file types are whitelisted, the plugin will just return control to your application, otherwise it will reply with a proper `HTTP 415 Unsupported Media Type` error.
 
-## <a name="whitelist">Default file format whitelist</a>
+### Default file format <a name="whitelist">whitelist</a>
 
 By default, you get the following whitelist of file formats:
 
