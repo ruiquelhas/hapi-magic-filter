@@ -4,7 +4,7 @@
   "description": "Hapi.js plugin to validate multipart/form-data file contents.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/lab/bin/lab -c"
+    "test": "./node_modules/lab/bin/lab -c -v"
   },
   "repository": {
     "type": "git",
@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/ruiquelhas/hapi-magic-filter",
   "dependencies": {
-    "boom": "^2.5.0"
+    "boom": "^2.5.0",
+    "config": "^1.0.2"
   },
   "devDependencies": {
     "form-data": "^0.1.4",

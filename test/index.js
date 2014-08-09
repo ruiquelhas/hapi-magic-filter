@@ -3,7 +3,7 @@ var fs = require('fs');
 var Lab = require('lab');
 var Hapi = require('hapi');
 var Nipple = require('nipple');
-var FormData = require('form-data');
+var Form = require('form-data');
 
 var internals = {};
 internals.handler = function (request, reply) { return reply(); };
@@ -19,7 +19,7 @@ Lab.experiment('multipart/form-data file upload', function () {
     suite.server.pack.register({
       plugin: plugin,
       options: {
-        supported: ['jpg', 'png']
+        allowed: ['jpg', 'png']
       }
     }, function (err) {
       suite.server.route({
@@ -55,7 +55,7 @@ Lab.experiment('multipart/form-data file upload', function () {
 
   Lab.experiment('when the file type is supported, the file should be upladed', function () {
     Lab.beforeEach(function (done) {
-      suite.form = new FormData();
+      suite.form = new Form();
       suite.form.append('file', fs.createReadStream('resources/file.png'));
       Nipple.read(suite.form, function (err, buffer) {
         suite.request.payload = buffer;
@@ -91,7 +91,7 @@ Lab.experiment('multipart/form-data file upload', function () {
 
   Lab.experiment('when the file type is not supported, the server should return an error', function () {
     Lab.beforeEach(function (done) {
-      suite.form = new FormData();
+      suite.form = new Form();
       suite.form.append('file', fs.createReadStream('resources/file.invalid'));
       Nipple.read(suite.form, function (err, buffer) {
         suite.request.payload = buffer;
