@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require('fs');
 
 var _ = require('lodash');
@@ -72,7 +74,7 @@ exports.verifyPositive = function (server, file, done) {
 
             return fn(null, stats.size);
         });
-    }
+    };
 
     var verify = function (response) {
 
@@ -102,7 +104,7 @@ exports.verifyNegative = function (server, file, done) {
 
         Code.expect(response.statusCode).to.equal(415);
 
-        fs.stat(tmp, function (err, copy) {
+        fs.stat(tmp, function (err) {
             Code.expect(err).to.not.be.null();
 
             return done();
