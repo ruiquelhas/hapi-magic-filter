@@ -15,6 +15,7 @@ var internals = {};
 internals.append = function (file, fn) {
 
     var form = new FormData();
+    form.append('text', 'Hello');
     form.append('file', fs.createReadStream(file));
 
     var options = {
