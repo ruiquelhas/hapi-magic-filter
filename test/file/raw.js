@@ -1,95 +1,97 @@
-// 'use strict';
+'use strict';
 
-// var fs = require('fs');
+var fs = require('fs');
 
-// var Lab = require('lab');
-// var Wreck = require('wreck');
-// var Subtext = require('subtext');
+var Lab = require('lab');
+var Wreck = require('wreck');
+var Subtext = require('subtext');
 
-// var lab = exports.lab = Lab.script();
+var lab = exports.lab = Lab.script();
 
-// var common = require('../common');
+var common = require('../common');
 
-// lab.describe('Data raw file upload', function () {
+lab.describe('Raw temporary file upload', function () {
 
-//     var server, payload;
+    var server, payload;
 
-//     lab.before(function (done) {
+    lab.before(function (done) {
 
-//         payload = {
-//             output: 'data',
-//             parse: false
-//         };
+        payload = {
+            output: 'file',
+            parse: false
+        };
 
-//         var handler = function (request, reply) {
-//             var tmp = 'test/tmp/file';
+        var handler = function (request, reply) {
 
-//             var options = {
-//                 output: 'data',
-//                 parse: true
-//             };
+            var tmp = 'test/tmp/file';
 
-//             var done = function (err) {
-//                 if (err) {
-//                     return reply(err);
-//                 }
+            var options = {
+                output: 'data',
+                parse: true
+            };
 
-//                 return reply();
-//             };
+            var done = function (err) {
 
-//             var save = function (buffer) {
-//                 return function (err, fd) {
-//                     if (err) {
-//                         return reply(err);
-//                     }
+                if (err) {
+                    return reply(err);
+                }
 
-//                     fs.write(fd, buffer, 0, buffer.length, 0, done);
-//                 };
-//             };
+                return reply();
+            };
 
-//             var open = function (err, parsed) {
-//                 if (err) {
-//                     return reply(err);
-//                 }
+            var copy = function (err, parsed) {
 
-//                 fs.open(tmp, 'w+', save(parsed.payload.file));
-//             };
+                if (err) {
+                    return reply(err);
+                }
 
-//             var stream = Wreck.toReadableStream(request.payload);
-//             stream.headers = request.headers;
+                fs.writeFile(tmp, parsed.payload.file, done);
+            };
 
-//             Subtext.parse(stream, null, options, open);
-//         };
+            var read = function (err, data) {
 
-//         var config = {
-//             payload: payload,
-//             handler: handler
-//         };
+                if (err) {
+                    return reply();
+                }
 
-//         common.boostrap(config, function (err, instance) {
+                var stream = Wreck.toReadableStream(data);
+                stream.headers = request.headers;
 
-//             if (err) {
-//                 return done(err);
-//             }
+                Subtext.parse(stream, null, options, copy);
+            };
 
-//             server = instance;
-//             return done();
-//         });
-//     });
+            fs.readFile(request.payload.path, read);
+        };
 
-//     lab.afterEach(function (done) {
+        var config = {
+            payload: payload,
+            handler: handler
+        };
 
-//         fs.unlink('test/tmp/file', function () {
-//             return done();
-//         });
-//     });
+        common.boostrap(config, function (err, instance) {
 
-//     lab.test('Returns OK if media type is supported.', function (done) {
-//         common.verifyPositive(server, 'test/static/file.png', done);
-//     });
+            if (err) {
+                return done(err);
+            }
 
-//     lab.test('Returns error if media type is not supported', function (done) {
-//         common.verifyNegative(server, 'test/static/file.gif', done);
-//     });
+            server = instance;
+            return done();
+        });
+    });
 
-// });
+    lab.afterEach(function (done) {
+
+        fs.unlink('test/tmp/file', function () {
+            return done();
+        });
+    });
+
+    lab.test('Returns OK if media type is supported.', function (done) {
+        common.verifyPositive(server, 'test/static/file.png', done);
+    });
+
+    lab.test('Returns error if media type is not supported', function (done) {
+        common.verifyNegative(server, 'test/static/file.gif', done);
+    });
+
+});

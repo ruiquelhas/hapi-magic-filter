@@ -19,10 +19,12 @@ lab.describe('Data parsing file upload', function () {
         };
 
         var handler = function (request, reply) {
+
             var buffer = request.payload.file;
             var tmp = 'test/tmp/file';
 
             var done = function (err) {
+
                 if (err) {
                     return reply(err);
                 }
@@ -31,6 +33,7 @@ lab.describe('Data parsing file upload', function () {
             };
 
             var save = function (err, fd) {
+
                 if (err) {
                     return reply(err);
                 }

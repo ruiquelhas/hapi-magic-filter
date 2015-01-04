@@ -22,6 +22,7 @@ lab.describe('Data raw file upload', function () {
         };
 
         var handler = function (request, reply) {
+
             var tmp = 'test/tmp/file';
 
             var options = {
@@ -30,6 +31,7 @@ lab.describe('Data raw file upload', function () {
             };
 
             var done = function (err) {
+
                 if (err) {
                     return reply(err);
                 }
@@ -38,6 +40,7 @@ lab.describe('Data raw file upload', function () {
             };
 
             var save = function (buffer) {
+
                 return function (err, fd) {
                     if (err) {
                         return reply(err);
@@ -48,6 +51,7 @@ lab.describe('Data raw file upload', function () {
             };
 
             var open = function (err, parsed) {
+
                 if (err) {
                     return reply(err);
                 }
