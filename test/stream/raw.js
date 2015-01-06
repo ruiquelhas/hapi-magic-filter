@@ -1,7 +1,6 @@
 'use strict';
 
 var fs = require('fs');
-var Transform = require('stream').Transform;
 
 var Lab = require('lab');
 var Wreck = require('wreck');
@@ -24,20 +23,31 @@ lab.describe('Stream raw upload', function () {
 
         var handler = function (request, reply) {
 
+            var tmp = 'test/tmp/file';
+
             var options = {
                 output: 'data',
                 parse: true
             };
 
-            var copy = function (err, parsed) {
-                console.log('err:', err);
-                console.log('parsed:', parsed);
+            var done = function (err) {
+
+                if (err) {
+                    return reply(err);
+                }
+
                 return reply();
             };
 
-            console.log('request.payload:', request.payload);
+            var copy = function (err, parsed) {
+                if (err) {
+                    return reply(err);
+                }
 
-            var stream = request.payload;
+                fs.writeFile(tmp, parsed.payload.file, done);
+            };
+
+            var stream = Wreck.toReadableStream(request.payload._shot.payload);
             stream.headers = request.headers;
 
             Subtext.parse(stream, null, options, copy);
