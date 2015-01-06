@@ -69,6 +69,7 @@ exports.verifyPositive = function (server, file, done) {
     var size = function (file, fn) {
 
         fs.stat(file, function (err, stats) {
+
             if (err) {
                 return done(err);
             }
@@ -81,11 +82,14 @@ exports.verifyPositive = function (server, file, done) {
 
         Code.expect(response.statusCode).to.equal(200);
 
-        size(file, function (original) {
+        size(file, function (err, original) {
 
-            size(tmp, function (copy) {
+            size(tmp, function (err, copy) {
 
+                Code.expect(err).to.not.exist();
+                Code.expect(copy).to.be.above(0);
                 Code.expect(original).to.equal(copy);
+
                 return done();
             });
         });
