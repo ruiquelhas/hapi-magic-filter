@@ -2,6 +2,8 @@
 
 var fs = require('fs');
 
+var streamToPromise = require('stream-to-promise');
+
 var Lab = require('lab');
 var lab = exports.lab = Lab.script();
 
@@ -24,7 +26,6 @@ lab.describe('Temporary file parsing upload', function () {
             var tmp = 'test/tmp/file';
 
             var input = fs.createReadStream(file);
-            var output = fs.createWriteStream(tmp);
 
             var done = function (err) {
 
@@ -35,7 +36,11 @@ lab.describe('Temporary file parsing upload', function () {
                 return reply();
             };
 
-            input.on('error', done).on('end', done).pipe(output);
+            var copy = function (data) {
+                fs.writeFile(tmp, data, { flag: 'w+' }, done);
+            };
+
+            streamToPromise(input).then(copy);
         };
 
         var config = {
@@ -62,11 +67,11 @@ lab.describe('Temporary file parsing upload', function () {
     });
 
     lab.test('Returns OK if media type is supported.', function (done) {
-        common.verifyPositive(server, 'test/static/file.png', done);
+        common.positive(server, 'test/static/file.png', done);
     });
 
     lab.test('Returns error if media type is not supported', function (done) {
-        common.verifyNegative(server, 'test/static/file.gif', done);
+        common.negative(server, 'test/static/file.gif', done);
     });
 
 });

@@ -77,11 +77,11 @@ lab.describe('Stream raw upload', function () {
     });
 
     lab.test('Returns OK if media type is supported.', function (done) {
-        common.verifyPositive(server, 'test/static/file.png', done);
+        common.positive(server, 'test/static/file.png', done);
     });
 
     lab.test('Returns error if media type is not supported', function (done) {
-        common.verifyNegative(server, 'test/static/file.gif', done);
+        common.negative(server, 'test/static/file.gif', done);
     });
 
 });

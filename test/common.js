@@ -5,6 +5,7 @@ var fs = require('fs');
 var _ = require('lodash');
 var Hapi = require('hapi');
 var Code = require('code');
+
 var FormData = require('form-data');
 var streamToPromise = require('stream-to-promise');
 
@@ -63,7 +64,7 @@ exports.boostrap = function (config /*, options, fn */) {
     });
 };
 
-exports.verifyPositive = function (server, file, done) {
+exports.positive = function (server, file, done) {
     var tmp = 'test/tmp/file';
 
     var size = function (file, fn) {
@@ -102,7 +103,7 @@ exports.verifyPositive = function (server, file, done) {
     internals.append(file, inject);
 };
 
-exports.verifyNegative = function (server, file, done) {
+exports.negative = function (server, file, done) {
     var tmp = 'test/tmp/file';
 
     var verify = function (response) {
