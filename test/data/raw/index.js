@@ -10,7 +10,7 @@ var common = require('../../common');
 
 var internals = {};
 
-lab.describe('raw data file upload', function () {
+lab.describe('raw data upload', function () {
 
     var server;
 
