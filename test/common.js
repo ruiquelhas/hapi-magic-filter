@@ -56,7 +56,10 @@ exports.boostrap = function (config /*, options, fn */) {
         server.route({
             path: '/',
             method: 'POST',
-            config: config
+            config: {
+                payload: config.payload,
+                handler: config.handler
+            }
         });
 
         return fn(null, server);

@@ -72,7 +72,8 @@ lab.describe('parsed data upload', function () {
 
             var options = {
                 allowed: {
-                    'png': '8950'
+                    'png': '8950',
+                    'gif': '4749'
                 }
             };
 
@@ -92,7 +93,7 @@ lab.describe('parsed data upload', function () {
         });
 
         lab.test('returns error if media type is not supported', function (done) {
-            common.negative(server, 'test/static/file.gif', done);
+            common.positive(server, 'test/static/file.gif', done);
         });
     });
 
