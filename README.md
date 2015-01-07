@@ -1,4 +1,4 @@
-# hapi-magic-filter
+# hapi-magic-filter [![Build Status](https://travis-ci.org/ruiquelhas/hapi-magic-filter.png)](https://travis-ci.org/ruiquelhas/hapi-magic-filter)
 
 Hapi.js plugin to validate multipart/form-data file contents.
 
@@ -11,71 +11,54 @@ As usual, you will need to install the package first.
 $ npm install hapi-magic-filter
 ```
 
-Since this is an [hapi.js](http://hapijs.com/) plugin, you need to use it like so. There are just three things you have need to remember. If you want to use the default file format [whitelist](#whitelist), just register the plugin.
+Register the package as a server plugin and provide a proper `options` object as depicted below if you need anything more than the default file format [whitelist](#whitelist).
 
 ```javascript
 var Hapi = require('hapi');
 var magic = require('hapi-magic-filter');
 
-var server = Hapi.createServer(1337);
-server.pack.register([
-  magic,
-  // Any other plugins you want to register
+var server = new Hapi.Server();
+server.connection({ port: 1337 });
+
+// Allow all file formats from the default whitelist
+server.register([
+    magic,
+    // Any other plugins you want to register
 ], function (err) {
-  server.start(function () {
-    // whatevs
-  });
+    server.start(function () {
+        // whatevs
+    });
 });
-```
 
-If you feel safer using only a subset of the formats available in the default whitelist, you can just provide the list file extensions you are ok with. Let's assume you are just interested in `PNG` or `JPEG` files. You'll need to register the plugin with additional options, providing that information via an array on the `allowed` field.
-
-```javascript
-var Hapi = require('hapi');
-var magic = require('hapi-magic-filter');
-
-var server = Hapi.createServer(1337);
-server.pack.register([
-  {
-    plugin: magic,
+// Allow only png and jpg files
+server.register([{
+    register: magic,
     options: {
-      allowed: ['png', 'jpg']
+        allowed: ['png', 'jpg']
     }
-  }
-  // Any other plugins you want to register
-  ], function (err) {
-  server.start(function () {
-    // whatevs
-  });
+}], function (err) {
+    server.start(function () {
+        // whatevs
+    });
 });
-```
 
-If you are felling hipster, you can just provide your <a name="hipster">own</a> custom whitelist (which will override the default one), using an object whose keys match the file extensions and values match the magic numbers.
-
-```javascript
-var Hapi = require('hapi');
-var magic = require('hapi-magic-filter');
-
-var server = Hapi.createServer(1337);
-server.pack.register([
-  {
-    plugin: magic,
+// Allow custom file formats (ignores default whitelist)
+server.register([{
+    register: magic,
     options: {
-      allowed: {
-        'png': '8950',
-        'jpg': 'ffd8'
-      }
+        allowed: {
+            'png': '8950',
+            'jpg': 'ffd8'
+        }
     }
-  }
-  // Any other plugins you want to register
-  ], function (err) {
-  server.start(function () {
-    // whatevs
-  });
+}], function (err) {
+    server.start(function () {
+        // whatevs
+    });
 });
 ```
 
-In any case, this is just glue on the `onPreHandler` extension point, so if all the uploaded file types are whitelisted, the plugin will just return control to your application, otherwise it will reply with a proper `HTTP 415 Unsupported Media Type` error.
+The plugin acts just as glue on the `onPreHandler` extension point, so if all the uploaded file types are whitelisted, the plugin will just return control to your application, otherwise it will reply with a proper `HTTP 415 Unsupported Media Type` error.
 
 ### Default file format <a name="whitelist">whitelist</a>
 
