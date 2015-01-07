@@ -1,4 +1,4 @@
-# hapi-magic-filter
+# hapi-magic-filter [![Build Status](https://travis-ci.org/ruiquelhas/hapi-magic-filter.png)](https://travis-ci.org/ruiquelhas/hapi-magic-filter)
 
 Hapi.js plugin to validate multipart/form-data file contents.
 
