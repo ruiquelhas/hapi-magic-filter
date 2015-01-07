@@ -22,45 +22,39 @@ server.connection({ port: 1337 });
 
 // Allow all file formats from the default whitelist
 server.register([
-  magic,
-  // Any other plugins you want to register
+    magic,
+    // Any other plugins you want to register
 ], function (err) {
-  server.start(function () {
-    // whatevs
-  });
+    server.start(function () {
+        // whatevs
+    });
 });
 
 // Allow only png and jpg files
-server.register([
-  {
+server.register([{
     register: magic,
     options: {
-      allowed: ['png', 'jpg']
+        allowed: ['png', 'jpg']
     }
-  }
-  // Any other plugins you want to register
-  ], function (err) {
-  server.start(function () {
-    // whatevs
-  });
+}], function (err) {
+    server.start(function () {
+        // whatevs
+    });
 });
 
 // Allow custom file formats (ignores default whitelist)
-server.register([
-  {
+server.register([{
     register: magic,
     options: {
-      allowed: {
-        'png': '8950',
-        'jpg': 'ffd8'
-      }
+        allowed: {
+            'png': '8950',
+            'jpg': 'ffd8'
+        }
     }
-  }
-  // Any other plugins you want to register
-  ], function (err) {
-  server.start(function () {
-    // whatevs
-  });
+}], function (err) {
+    server.start(function () {
+        // whatevs
+    });
 });
 ```
 
