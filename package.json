@@ -26,17 +26,17 @@
   },
   "homepage": "https://github.com/ruiquelhas/hapi-magic-filter",
   "dependencies": {
-    "async": "^0.9.0",
+    "async": "^1.4.2",
     "boom": "^2.6.1",
-    "lodash": "^2.4.1",
-    "subtext": "^1.0.2",
-    "wreck": "^5.1.0"
+    "lodash": "^3.10.1",
+    "subtext": "^2.0.1",
+    "wreck": "^6.3.0"
   },
   "devDependencies": {
     "code": "^1.2.1",
-    "form-data": "^0.2.0",
-    "hapi": "^8.0.0",
-    "lab": "^5.1.0",
+    "form-data": "^1.0.0-rc3",
+    "hapi": "^11.0.0",
+    "lab": "^6.2.0",
     "stream-to-promise": "^1.0.4"
   }
 }
