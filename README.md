@@ -1,4 +1,4 @@
-# hapi-magic-filter [![Build Status](https://travis-ci.org/ruiquelhas/hapi-magic-filter.png)](https://travis-ci.org/ruiquelhas/hapi-magic-filter)
+# hapi-magic-filter [![Build Status][travis-img]][travis-url] [![Coverage Status][coveralls-img]][coveralls-url] [![Dependencies][david-img]][david-url]
 
 Hapi.js plugin to validate multipart/form-data file contents.
 
@@ -73,3 +73,10 @@ By default, you get the following whitelist of file formats:
 * `tar`
 
 These are probably the most used interchangeable file formats on the web, but if you think you need more, by now, you should know how to provide your [own](#hipster) whitelist. However, if you think those additional file formats you need, should be an integral part of the base implementation, just open an [issue](//github.com/ruiquelhas/hapi-magic-filter/issues/new) or submit a [pull request](//github.com/ruiquelhas/hapi-magic-filter/compare/).
+
+[coveralls-img]: https://coveralls.io/repos/ruiquelhas/hapi-magic-filter/badge.svg
+[coveralls-url]: https://coveralls.io/github/ruiquelhas/hapi-magic-filter
+[david-img]: https://david-dm.org/ruiquelhas/hapi-magic-filter.svg
+[david-url]: https://david-dm.org/ruiquelhas/hapi-magic-filter
+[travis-img]: https://travis-ci.org/ruiquelhas/hapi-magic-filter.svg
+[travis-url]: https://travis-ci.org/ruiquelhas/hapi-magic-filter
