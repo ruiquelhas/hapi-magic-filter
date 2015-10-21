@@ -41,5 +41,8 @@
     "hapi": "^11.0.0",
     "lab": "^6.2.0",
     "stream-to-promise": "^1.0.4"
+  },
+  "engines": {
+    "node": ">=4.2"
   }
 }
