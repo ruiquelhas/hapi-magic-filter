@@ -30,10 +30,12 @@ lab.describe('raw data upload', function () {
         });
 
         lab.test('returns control if media type is supported.', function (done) {
+
             common.positive(server, 'test/static/file.png', done);
         });
 
         lab.test('returns error if media type is not supported', function (done) {
+
             common.negative(server, 'test/static/file.gif', done);
         });
     });
@@ -58,10 +60,12 @@ lab.describe('raw data upload', function () {
         });
 
         lab.test('returns control if media type is supported.', function (done) {
+
             common.positive(server, 'test/static/file.png', done);
         });
 
         lab.test('returns error if media type is not supported', function (done) {
+
             common.negative(server, 'test/static/file.gif', done);
         });
     });
@@ -89,10 +93,12 @@ lab.describe('raw data upload', function () {
         });
 
         lab.test('returns control if media type is supported.', function (done) {
+
             common.positive(server, 'test/static/file.png', done);
         });
 
         lab.test('returns error if media type is not supported', function (done) {
+
             common.positive(server, 'test/static/file.gif', done);
         });
     });
@@ -100,6 +106,7 @@ lab.describe('raw data upload', function () {
     lab.afterEach(function (done) {
 
         fs.unlink('test/tmp/file', function () {
+
             return done();
         });
     });

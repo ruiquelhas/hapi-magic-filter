@@ -61,8 +61,8 @@ internals.defaults = {
 
 exports.boostrap = function (options, fn) {
 
-    var options = _.isFunction(arguments[1]) ? arguments[0] : {};
-    var fn = _.isFunction(arguments[1]) ? arguments[1] : arguments[0];
+    options = _.isFunction(arguments[1]) ? arguments[0] : {};
+    fn = _.isFunction(arguments[1]) ? arguments[1] : arguments[0];
 
     common.boostrap(internals.defaults, options, fn);
 };

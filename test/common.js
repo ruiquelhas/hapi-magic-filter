@@ -68,11 +68,12 @@ exports.boostrap = function (config /*, options, fn */) {
 };
 
 exports.positive = function (server, file, done) {
+
     var tmp = 'test/tmp/file';
 
-    var size = function (file, fn) {
+    var size = function (fileRef, fn) {
 
-        fs.stat(file, function (err, stats) {
+        fs.stat(fileRef, function (err, stats) {
 
             if (err) {
                 return done(err);
@@ -100,6 +101,7 @@ exports.positive = function (server, file, done) {
     };
 
     var inject = function (request) {
+
         server.inject(request, verify);
     };
 
@@ -107,20 +109,23 @@ exports.positive = function (server, file, done) {
 };
 
 exports.negative = function (server, file, done) {
+
     var tmp = 'test/tmp/file';
+
+    var assert = function (err) {
+
+        Code.expect(err).to.not.be.null();
+        return done();
+    };
 
     var verify = function (response) {
 
         Code.expect(response.statusCode).to.equal(415);
-
-        fs.stat(tmp, function (err) {
-            Code.expect(err).to.not.be.null();
-
-            return done();
-        });
+        fs.stat(tmp, assert);
     };
 
     var inject = function (request) {
+
         server.inject(request, verify);
     };
 
