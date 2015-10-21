@@ -1,6 +1,6 @@
 {
   "name": "hapi-magic-filter",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Hapi.js plugin to validate multipart/form-data file contents.",
   "main": "lib/index.js",
   "scripts": {
