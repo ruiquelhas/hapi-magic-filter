@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "code": "^1.2.1",
+    "david": "^6.2.0",
     "form-data": "^1.0.0-rc3",
     "hapi": "^11.0.0",
     "lab": "^6.2.0",
