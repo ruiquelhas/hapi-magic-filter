@@ -36,7 +36,7 @@
     "wreck": "^6.3.0"
   },
   "devDependencies": {
-    "code": "^1.2.1",
+    "code": "^2.0.0",
     "coveralls": "^2.11.4",
     "david": "^6.2.0",
     "form-data": "^1.0.0-rc3",
