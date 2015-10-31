@@ -30,7 +30,7 @@
   "homepage": "https://github.com/ruiquelhas/hapi-magic-filter",
   "dependencies": {
     "async": "^1.4.2",
-    "boom": "^2.6.1",
+    "boom": "^3.0.0",
     "lodash": "^3.10.1",
     "subtext": "^2.0.1",
     "wreck": "^6.3.0"
