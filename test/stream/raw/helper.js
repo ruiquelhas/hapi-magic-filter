@@ -1,14 +1,14 @@
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var _ = require('lodash');
-var Wreck = require('wreck');
-var Subtext = require('subtext');
+const _ = require('lodash');
+const Wreck = require('wreck');
+const Subtext = require('subtext');
 
-var common = require('../../common');
+const common = require('../../common');
 
-var internals = {};
+const internals = {};
 
 internals.defaults = {
     payload: {
@@ -18,14 +18,14 @@ internals.defaults = {
 
     handler: function (request, reply) {
 
-        var tmp = 'test/tmp/file';
+        const tmp = 'test/tmp/file';
 
-        var options = {
+        const options = {
             output: 'data',
             parse: true
         };
 
-        var done = function (err) {
+        const done = function (err) {
 
             if (err) {
                 return reply(err);
@@ -34,7 +34,7 @@ internals.defaults = {
             return reply();
         };
 
-        var copy = function (err, parsed) {
+        const copy = function (err, parsed) {
 
             if (err) {
                 return reply(err);
@@ -43,7 +43,7 @@ internals.defaults = {
             fs.writeFile(tmp, parsed.payload.file, done);
         };
 
-        var stream = Wreck.toReadableStream(request.payload._shot.payload);
+        const stream = Wreck.toReadableStream(request.payload._shot.payload);
         stream.headers = request.headers;
 
         Subtext.parse(stream, null, options, copy);

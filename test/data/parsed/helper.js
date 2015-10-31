@@ -1,12 +1,12 @@
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var _ = require('lodash');
+const _ = require('lodash');
 
-var common = require('../../common');
+const common = require('../../common');
 
-var internals = {};
+const internals = {};
 
 internals.defaults = {
     payload: {
@@ -16,10 +16,10 @@ internals.defaults = {
 
     handler: function (request, reply) {
 
-        var buffer = request.payload.file;
-        var tmp = 'test/tmp/file';
+        const buffer = request.payload.file;
+        const tmp = 'test/tmp/file';
 
-        var done = function (err) {
+        const done = function (err) {
 
             if (err) {
                 return reply(err);
@@ -28,7 +28,7 @@ internals.defaults = {
             return reply();
         };
 
-        var save = function (err, fd) {
+        const save = function (err, fd) {
 
             if (err) {
                 return reply(err);

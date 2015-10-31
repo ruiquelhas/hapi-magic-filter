@@ -1,13 +1,13 @@
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var _ = require('lodash');
-var streamToPromise = require('stream-to-promise');
+const _ = require('lodash');
+const streamToPromise = require('stream-to-promise');
 
-var common = require('../../common');
+const common = require('../../common');
 
-var internals = {};
+const internals = {};
 
 internals.defaults = {
     payload: {
@@ -17,12 +17,12 @@ internals.defaults = {
 
     handler: function (request, reply) {
 
-        var file = request.payload.file.path;
-        var tmp = 'test/tmp/file';
+        const file = request.payload.file.path;
+        const tmp = 'test/tmp/file';
 
-        var input = fs.createReadStream(file);
+        const input = fs.createReadStream(file);
 
-        var done = function (err) {
+        const done = function (err) {
 
             if (err) {
                 return reply(err);
@@ -31,7 +31,7 @@ internals.defaults = {
             return reply();
         };
 
-        var copy = function (data) {
+        const copy = function (data) {
 
             fs.writeFile(tmp, data, { flag: 'w+' }, done);
         };
