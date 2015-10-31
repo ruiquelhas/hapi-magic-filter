@@ -33,7 +33,7 @@
     "boom": "^3.0.0",
     "lodash": "^3.10.1",
     "subtext": "^2.0.1",
-    "wreck": "^6.3.0"
+    "wreck": "^7.0.0"
   },
   "devDependencies": {
     "code": "^2.0.1",
