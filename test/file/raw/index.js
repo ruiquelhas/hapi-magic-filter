@@ -1,24 +1,24 @@
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var Lab = require('lab');
-var lab = exports.lab = Lab.script();
+const Lab = require('lab');
+const lab = exports.lab = Lab.script();
 
-var helper = require('./helper');
-var common = require('../../common');
+const helper = require('./helper');
+const common = require('../../common');
 
-var internals = {};
+const internals = {};
 
-lab.describe('raw temporary file upload', function () {
+lab.describe('raw temporary file upload', () => {
 
-    var server;
+    let server;
 
-    lab.describe('with default whitelist', function () {
+    lab.describe('with default whitelist', () => {
 
-        lab.beforeEach(function (done) {
+        lab.beforeEach((done) => {
 
-            helper.boostrap(function (err, instance) {
+            helper.boostrap((err, instance) => {
 
                 if (err) {
                     return done(err);
@@ -29,26 +29,26 @@ lab.describe('raw temporary file upload', function () {
             });
         });
 
-        lab.test('returns control if media type is supported.', function (done) {
+        lab.test('returns control if media type is supported.', (done) => {
 
             common.positive(server, 'test/static/file.png', done);
         });
 
-        lab.test('returns error if media type is not supported', function (done) {
+        lab.test('returns error if media type is not supported', (done) => {
 
             common.negative(server, 'test/static/file.gif', done);
         });
     });
 
-    lab.describe('with selection whitelist', function () {
+    lab.describe('with selection whitelist', () => {
 
-        lab.beforeEach(function (done) {
+        lab.beforeEach((done) => {
 
-            var options = {
+            const options = {
                 allowed: ['png']
             };
 
-            helper.boostrap(options, function (err, instance) {
+            helper.boostrap(options, (err, instance) => {
 
                 if (err) {
                     return done(err);
@@ -59,29 +59,29 @@ lab.describe('raw temporary file upload', function () {
             });
         });
 
-        lab.test('returns control if media type is supported.', function (done) {
+        lab.test('returns control if media type is supported.', (done) => {
 
             common.positive(server, 'test/static/file.png', done);
         });
 
-        lab.test('returns error if media type is not supported', function (done) {
+        lab.test('returns error if media type is not supported', (done) => {
 
             common.negative(server, 'test/static/file.gif', done);
         });
     });
 
-    lab.describe('with custom whitelist', function () {
+    lab.describe('with custom whitelist', () => {
 
-        lab.beforeEach(function (done) {
+        lab.beforeEach((done) => {
 
-            var options = {
+            const options = {
                 allowed: {
                     'png': '8950',
                     'gif': '4749'
                 }
             };
 
-            helper.boostrap(options, function (err, instance) {
+            helper.boostrap(options, (err, instance) => {
 
                 if (err) {
                     return done(err);
@@ -92,20 +92,20 @@ lab.describe('raw temporary file upload', function () {
             });
         });
 
-        lab.test('returns control if media type is supported.', function (done) {
+        lab.test('returns control if media type is supported.', (done) => {
 
             common.positive(server, 'test/static/file.png', done);
         });
 
-        lab.test('returns error if media type is not supported', function (done) {
+        lab.test('returns error if media type is not supported', (done) => {
 
             common.positive(server, 'test/static/file.gif', done);
         });
     });
 
-    lab.afterEach(function (done) {
+    lab.afterEach((done) => {
 
-        fs.unlink('test/tmp/file', function () {
+        fs.unlink('test/tmp/file', () => {
 
             return done();
         });

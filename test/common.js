@@ -1,31 +1,31 @@
 'use strict';
 
-var fs = require('fs');
+const fs = require('fs');
 
-var _ = require('lodash');
-var Hapi = require('hapi');
-var Code = require('code');
+const _ = require('lodash');
+const Hapi = require('hapi');
+const Code = require('code');
 
-var FormData = require('form-data');
-var streamToPromise = require('stream-to-promise');
+const FormData = require('form-data');
+const streamToPromise = require('stream-to-promise');
 
-var plugin = require('../');
+const plugin = require('../');
 
-var internals = {};
+const internals = {};
 
 internals.append = function (file, fn) {
 
-    var form = new FormData();
+    const form = new FormData();
     form.append('text', 'Hello');
     form.append('file', fs.createReadStream(file));
 
-    var options = {
+    const options = {
         url: '/',
         method: 'POST',
         headers: form.getHeaders()
     };
 
-    streamToPromise(form).then(function (payload) {
+    streamToPromise(form).then((payload) => {
 
         options.payload = payload;
         return fn(options);
@@ -37,17 +37,17 @@ exports = module.exports = {};
 
 exports.boostrap = function (config /*, options, fn */) {
 
-    var options = _.isFunction(arguments[2]) ? arguments[1] : {};
-    var fn = _.isFunction(arguments[2]) ? arguments[2] : arguments[1];
+    const options = _.isFunction(arguments[2]) ? arguments[1] : {};
+    const fn = _.isFunction(arguments[2]) ? arguments[2] : arguments[1];
 
-    var server = new Hapi.Server();
-    var props = {
+    const server = new Hapi.Server();
+    const props = {
         register: plugin,
         options: options
     };
 
     server.connection();
-    server.register(props, function (err) {
+    server.register(props, (err) => {
 
         if (err) {
             return fn(err);
@@ -69,11 +69,11 @@ exports.boostrap = function (config /*, options, fn */) {
 
 exports.positive = function (server, file, done) {
 
-    var tmp = 'test/tmp/file';
+    const tmp = 'test/tmp/file';
 
-    var size = function (fileRef, fn) {
+    const size = function (fileRef, fn) {
 
-        fs.stat(fileRef, function (err, stats) {
+        fs.stat(fileRef, (err, stats) => {
 
             if (err) {
                 return done(err);
@@ -83,13 +83,13 @@ exports.positive = function (server, file, done) {
         });
     };
 
-    var verify = function (response) {
+    const verify = function (response) {
 
         Code.expect(response.statusCode).to.equal(200);
 
-        size(file, function (err, original) {
+        size(file, (err, original) => {
 
-            size(tmp, function (err, copy) {
+            size(tmp, (err, copy) => {
 
                 Code.expect(err).to.not.exist();
                 Code.expect(copy).to.be.above(0);
@@ -100,7 +100,7 @@ exports.positive = function (server, file, done) {
         });
     };
 
-    var inject = function (request) {
+    const inject = function (request) {
 
         server.inject(request, verify);
     };
@@ -110,21 +110,21 @@ exports.positive = function (server, file, done) {
 
 exports.negative = function (server, file, done) {
 
-    var tmp = 'test/tmp/file';
+    const tmp = 'test/tmp/file';
 
-    var assert = function (err) {
+    const assert = function (err) {
 
         Code.expect(err).to.not.be.null();
         return done();
     };
 
-    var verify = function (response) {
+    const verify = function (response) {
 
         Code.expect(response.statusCode).to.equal(415);
         fs.stat(tmp, assert);
     };
 
-    var inject = function (request) {
+    const inject = function (request) {
 
         server.inject(request, verify);
     };
