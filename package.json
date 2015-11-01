@@ -4,6 +4,7 @@
   "description": "Hapi.js plugin to validate multipart/form-data file contents.",
   "main": "lib/index.js",
   "scripts": {
+    "changelog": "github_changelog_generator --header-label='# Changelog'",
     "coveralls": "lab -r lcov | ./node_modules/.bin/coveralls",
     "test": "lab -a code -L",
     "test-tap": "lab -a code -r tap -o tests.tap",
@@ -38,7 +39,6 @@
   "devDependencies": {
     "code": "^2.0.1",
     "coveralls": "^2.11.4",
-    "david": "^6.2.0",
     "form-data": "^1.0.0-rc3",
     "hapi": "^11.0.0",
     "lab": "^7.1.0",
