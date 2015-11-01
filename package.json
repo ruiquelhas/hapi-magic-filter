@@ -45,6 +45,6 @@
     "stream-to-promise": "1.x.x"
   },
   "engines": {
-    "node": ">=4.2"
+    "node": ">=4.0.0"
   }
 }
