@@ -37,7 +37,7 @@
     "wreck": "7.x.x"
   },
   "devDependencies": {
-    "code": "2.x.x",
+    "code": "2.1.0",
     "coveralls": "2.x.x",
     "form-data": "0.x.x",
     "hapi": "11.x.x",
