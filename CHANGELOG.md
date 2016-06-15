@@ -1,5 +1,12 @@
 # Changelog
 
+## [v2.0.1](https://github.com/ruiquelhas/hapi-magic-filter/tree/v2.0.1) (2016-06-15)
+[Full Changelog](https://github.com/ruiquelhas/hapi-magic-filter/compare/v2.0.0...v2.0.1)
+
+**Merged pull requests:**
+
+- Deprecate package [\#19](https://github.com/ruiquelhas/hapi-magic-filter/pull/19) ([ruiquelhas](https://github.com/ruiquelhas))
+
 ## [v2.0.0](https://github.com/ruiquelhas/hapi-magic-filter/tree/v2.0.0) (2015-11-01)
 [Full Changelog](https://github.com/ruiquelhas/hapi-magic-filter/compare/v1.1.0...v2.0.0)
 
